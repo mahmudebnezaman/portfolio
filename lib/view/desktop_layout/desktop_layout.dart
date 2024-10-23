@@ -225,14 +225,98 @@ class _DesktopLayoutState extends State<DesktopLayout> {
             ),
           ),
           const Gap(15),
-          const Card(
-            child: ListTile(
-              leading: Icon(Icons.person),
-              title: Text("Compnay"),
-              subtitle: Text("2024-"),
-              trailing: Icon(Icons.more_vert),
-            ),
-          )
+           Padding(
+             padding: const EdgeInsets.symmetric(horizontal: 16.0),
+             child: Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
+                child: Row(
+                  children: [
+                    // Image section
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: Image.asset(
+                            'assets/images/softifybd.png', // Replace with your image URL
+                            width: 160,
+                            height: 120,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    // Text section
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '2024-Present',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Softifybd Ltd.',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Intern',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Cross Platform Mobile Application Developer',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Contact button
+                    Container(
+                      margin: EdgeInsets.only(left: 16),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: seedColor.withOpacity(0.1),
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          scrollToSection(_contactKey);
+                        },
+                        child: Text(
+                          'CONTACT ME',
+                          style: TextStyle(
+                            color: seedColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+                       ),
+           ),
         ],
       ),
     );
