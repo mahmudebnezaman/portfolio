@@ -13,7 +13,10 @@
       "Bash(powershell -NoProfile -Command \"Set-Location ''D:\\\\Walk-of-Life\\\\Personal-Projects\\\\portfolio''; git push origin main 2>&1\")",
       "Bash(powershell -NoProfile -Command \"gh run list --repo mahmudebnezaman/PortfolioWithFlutter --limit 5 2>&1\")",
       "WebFetch(domain:api.github.com)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:mahmudebnezaman.github.io)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }

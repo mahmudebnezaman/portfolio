@@ -453,6 +453,8 @@ class _MobileLayoutState extends State<MobileLayout> {
           const ContactInfoRow(icon: linkedInIcon, text: "LinkedIn", url: linkedInLink),
           const Gap(5),
           const ContactInfoRow(icon: githubIcon, text: "GitHub", url: githubLink),
+          const Gap(5),
+          const ContactInfoRow(icon: teamsIcon, text: "Teams", url: teamsLink),
           const Gap(20),
           Container(
             decoration: BoxDecoration(

@@ -7,7 +7,7 @@ const String backgroundImage = "assets/images/stars.jpg";
 
 // App Icons
 const String linkedInIcon = "assets/svgs/linkedin.svg";
-const String githubIcon = "assets/svgs/github.svg";
+const String githubIcon = "assets/svgs/github-logo.svg";
 const String teamsIcon = "assets/svgs/teams.svg";
 const String phoneIcon = "assets/svgs/phone.svg";
 const String emailIcon = "assets/svgs/email.svg";

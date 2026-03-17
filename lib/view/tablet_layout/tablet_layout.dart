@@ -429,6 +429,8 @@ class _TabletLayoutState extends State<TabletLayout> {
                   const ContactInfoRow(icon: linkedInIcon, text: "LinkedIn", url: linkedInLink),
                   const Gap(5),
                   const ContactInfoRow(icon: githubIcon, text: "GitHub", url: githubLink),
+                  const Gap(5),
+                  const ContactInfoRow(icon: teamsIcon, text: "Teams", url: teamsLink),
                 ],
               ),
             ),
