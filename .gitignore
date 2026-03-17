@@ -44,3 +44,14 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+# Flutter web build artifacts (must not be committed - breaks GitHub Actions build)
+web/assets/
+web/canvaskit/
+web/splash/
+web/main.dart.js
+web/main.dart.js.map
+web/flutter.js
+web/flutter_bootstrap.js
+web/flutter_service_worker.js
+web/.last_build_id
+web/version.json
