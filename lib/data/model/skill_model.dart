@@ -2,6 +2,7 @@ class Skill {
   final String icon;
   final String title;
   final String description;
+  final String category;
 
-  Skill(this.icon, this.title, this.description);
+  const Skill(this.icon, this.title, this.description, {this.category = ''});
 }

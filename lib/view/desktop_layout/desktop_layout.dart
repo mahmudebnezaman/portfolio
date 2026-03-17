@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:portfolio/core/constants/app_assets.dart';
 import 'package:portfolio/core/constants/app_colors.dart';
 import 'package:portfolio/core/constants/app_texts.dart';
+import 'package:portfolio/core/widgets/animated_role_text.dart';
+import 'package:portfolio/core/widgets/contact_form.dart';
 import 'package:portfolio/core/widgets/contact_info_row.dart';
+import 'package:portfolio/core/widgets/education_card.dart';
+import 'package:portfolio/core/widgets/experience_card.dart';
+import 'package:portfolio/core/widgets/fade_slide_in.dart';
 import 'package:portfolio/core/widgets/large_screen_appbar.dart';
+import 'package:portfolio/core/widgets/project_card.dart';
+import 'package:portfolio/core/widgets/section_header.dart';
+import 'package:portfolio/core/widgets/skill_card.dart';
 
 class DesktopLayout extends StatefulWidget {
   const DesktopLayout({super.key});
@@ -20,10 +27,19 @@ class _DesktopLayoutState extends State<DesktopLayout> {
 
   final GlobalKey _homeKey = GlobalKey();
   final GlobalKey _skillsKey = GlobalKey();
-  final GlobalKey _experience = GlobalKey();
+  final GlobalKey _experienceKey = GlobalKey();
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _educationKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void scrollToSection(GlobalKey key) {
+    if (key.currentContext == null) return;
     Scrollable.ensureVisible(
       key.currentContext!,
       duration: const Duration(seconds: 1),
@@ -34,58 +50,74 @@ class _DesktopLayoutState extends State<DesktopLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         onNavButtonPressed: (section) {
-          if (section == "Home") {
-            scrollToSection(_homeKey);
-          } else if (section == "Skills") {
-            scrollToSection(_skillsKey);
-          } else if (section == "Contact") {
-            scrollToSection(_contactKey);
+          switch (section) {
+            case "Home":
+              scrollToSection(_homeKey);
+            case "Skills":
+              scrollToSection(_skillsKey);
+            case "Experience":
+              scrollToSection(_experienceKey);
+            case "Projects":
+              scrollToSection(_projectsKey);
+            case "Education":
+              scrollToSection(_educationKey);
+            case "Contact":
+              scrollToSection(_contactKey);
           }
         },
       ),
       body: Stack(
         children: [
-          Image.asset(
-            backgroundImage,
-            height: MediaQuery.sizeOf(context).height,
-            width: MediaQuery.sizeOf(context).width,
-            fit: BoxFit.cover,
+          Positioned.fill(
+            child: Image.asset(backgroundImage, fit: BoxFit.cover),
+          ),
+          // Dark gradient overlay for readability
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0x33080810),
+                    Color(0x99080810),
+                  ],
+                ),
+              ),
+            ),
           ),
           SingleChildScrollView(
             controller: _scrollController,
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+              padding: const EdgeInsets.only(
+                top: kToolbarHeight + 16,
+                bottom: 8,
+                left: 16,
+                right: 16,
+              ),
               child: Column(
                 children: <Widget>[
-                  // Home Section
-                  Container(
-                    key: _homeKey,
-                    child: homeSection(context),
-                  ),
-                  // Skills Section
-                  Container(
-                    key: _skillsKey,
-                    child: skillSection(context),
-                  ),
-                  const Gap(100),
-                  // Experience Section
-                  Container(
-                    key: _experience,
-                    child: experienceSection(context),
-                  ),
-                  // Contact Section
-                  Container(
-                    key: _contactKey,
-                    child: getInTouchSection(context),
-                  ),
-                  const Divider(),
+                  Container(key: _homeKey, child: homeSection(context)),
+                  _sectionDivider(),
+                  Container(key: _skillsKey, child: skillSection(context)),
+                  _sectionDivider(),
+                  Container(key: _experienceKey, child: experienceSection(context)),
+                  _sectionDivider(),
+                  Container(key: _projectsKey, child: projectsSection(context)),
+                  _sectionDivider(),
+                  Container(key: _educationKey, child: educationSection(context)),
+                  _sectionDivider(),
+                  Container(key: _contactKey, child: getInTouchSection(context)),
+                  const Gap(20),
+                  Divider(color: Colors.white.withValues(alpha: 0.08)),
                   Text(
                     "Developed by -Mahmud",
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
+                  const Gap(8),
                 ],
               ),
             ),
@@ -95,9 +127,32 @@ class _DesktopLayoutState extends State<DesktopLayout> {
     );
   }
 
+  Widget _sectionDivider() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 48),
+      child: Row(
+        children: [
+          Expanded(child: Container(height: 1, color: Colors.white.withValues(alpha: 0.06))),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: Container(
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(
+                color: seedColor.withValues(alpha: 0.55),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          Expanded(child: Container(height: 1, color: Colors.white.withValues(alpha: 0.06))),
+        ],
+      ),
+    );
+  }
+
   Widget homeSection(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top:8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,33 +162,44 @@ class _DesktopLayoutState extends State<DesktopLayout> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Hey there,",
-                  style: Theme.of(context).textTheme.titleSmall,
+                FadeSlideIn(
+                  delay: const Duration(milliseconds: 0),
+                  child: Text("Hey there,", style: Theme.of(context).textTheme.titleSmall),
                 ),
-                Text(
-                  "I'm Mahmud Ebne Zaman",
-                  style: Theme.of(context).textTheme.headlineLarge,
+                const Gap(4),
+                FadeSlideIn(
+                  delay: const Duration(milliseconds: 120),
+                  child: ShaderMask(
+                    shaderCallback: (bounds) => const LinearGradient(
+                      colors: [Colors.white, seedColor],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ).createShader(bounds),
+                    child: Text(
+                      "I'm Mahmud Ebne Zaman",
+                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(color: Colors.white),
+                    ),
+                  ),
                 ),
-                Text(
-                  "-Mobile Application Developer",
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(color: seedColor),
+                const Gap(4),
+                const FadeSlideIn(
+                  delay: Duration(milliseconds: 240),
+                  child: AnimatedRoleText(),
                 ),
-                const Gap(5),
-                Text(
-                  "\"I am a passionate Flutter developer with a knack for creating intuitive and engaging mobile applications. My expertise lies in building responsive UIs and implementing innovative features that enhance user experiences. I thrive on challenges and continuously seek opportunities to expand my skills and knowledge in the ever-evolving tech landscape.\"",
-                  style: Theme.of(context).textTheme.bodySmall,
+                const Gap(16),
+                FadeSlideIn(
+                  delay: const Duration(milliseconds: 360),
+                  child: Text(
+                    "Flutter & Dart developer with 1+ year of production experience building cross-platform mobile applications. Specializing in Clean Architecture, offline-first systems, and multi-role enterprise apps. Proven track record delivering scalable, maintainable solutions in fast-paced team environments.",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ),
-                const Gap(5),
-                ElevatedButton(
-                  onPressed: () {
-                    scrollToSection(_contactKey);
-                  },
-                  child: const Text(
-                    "Get in touch",
+                const Gap(20),
+                FadeSlideIn(
+                  delay: const Duration(milliseconds: 480),
+                  child: ElevatedButton(
+                    onPressed: () => scrollToSection(_contactKey),
+                    child: const Text("Get in touch"),
                   ),
                 ),
               ],
@@ -141,13 +207,28 @@ class _DesktopLayoutState extends State<DesktopLayout> {
           ),
           Flexible(
             flex: 2,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(36),
-              child: Image.asset(
-                profileImage,
-                height: 400,
-                fit: BoxFit.contain,
-                isAntiAlias: true,
+            child: FadeSlideIn(
+              delay: const Duration(milliseconds: 200),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(36),
+                  boxShadow: [
+                    BoxShadow(
+                      color: seedColor.withValues(alpha: 0.35),
+                      blurRadius: 60,
+                      spreadRadius: 5,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(36),
+                  child: Image.asset(
+                    profileImage,
+                    height: 400,
+                    fit: BoxFit.contain,
+                    isAntiAlias: true,
+                  ),
+                ),
               ),
             ),
           ),
@@ -157,219 +238,242 @@ class _DesktopLayoutState extends State<DesktopLayout> {
   }
 
   Widget skillSection(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top:8.0),
-      child: Column(
-        children: [
-          Text(
-            "Skills",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width * 0.6,
-            child: Text(
-              "Skilled in Flutter development with a strong focus on building responsive and dynamic mobile apps. Proficient in integrating advanced UI/UX features and backend functionalities.",
-              style: Theme.of(context).textTheme.bodySmall,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const Gap(15),
-          Wrap(
-            spacing: 10.0,
-            runSpacing: 10.0,
-            alignment: WrapAlignment.center,
-            children: skillsList.map((skill) {
-              return SizedBox(
-                width: MediaQuery.sizeOf(context).width * 0.2,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        SvgPicture.asset(
-                          skill.icon,
-                          height: MediaQuery.sizeOf(context).height * 0.2,
-                        ),
-                        const Gap(5),
-                        Text(skill.title, style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white, fontSize: 14), textAlign: TextAlign.center),
-                        const Gap(3),
-                        Text(skill.description, style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
-                        const Gap(5),
-                      ],
+    final cardWidth = MediaQuery.sizeOf(context).width * 0.18;
+    return Column(
+      children: [
+        const SectionHeader(
+          title: "Skills",
+          description:
+              "Skilled in Flutter development with a strong focus on building responsive and dynamic mobile apps. Proficient in Clean Architecture, advanced state management, and backend integrations.",
+        ),
+        const Gap(24),
+        ...groupedSkills.entries.map((entry) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _categoryLabel(context, entry.key),
+              const Gap(10),
+              Wrap(
+                spacing: 10.0,
+                runSpacing: 10.0,
+                alignment: WrapAlignment.center,
+                children: entry.value.asMap().entries.map((e) {
+                  return FadeSlideIn(
+                    delay: Duration(milliseconds: e.key * 60),
+                    child: SizedBox(
+                      width: cardWidth.clamp(120, 220),
+                      child: SkillCard(skill: e.value, iconSize: 72, titleFontSize: 13, showDescription: true),
                     ),
-                  ),
-                ),
-              );
-            }).toList(),
-          )
-        ],
-      ),
+                  );
+                }).toList(),
+              ),
+              const Gap(20),
+            ],
+          );
+        }),
+      ],
+    );
+  }
+
+  Widget _categoryLabel(BuildContext context, String label) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 28,
+          height: 1,
+          color: seedColor.withValues(alpha: 0.4),
+        ),
+        const Gap(8),
+        Text(
+          label.toUpperCase(),
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: seedColor.withValues(alpha: 0.9),
+                letterSpacing: 1.8,
+                fontWeight: FontWeight.w700,
+              ),
+        ),
+        const Gap(8),
+        Container(
+          width: 28,
+          height: 1,
+          color: seedColor.withValues(alpha: 0.4),
+        ),
+      ],
     );
   }
 
   Widget experienceSection(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top:8.0),
-      child: Column(
-        children: [
-          Text(
-            "Experience",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width * 0.5,
-            child: Text(
+    return Column(
+      children: [
+        const SectionHeader(
+          title: "Experience",
+          description:
               "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. -by Steve Jobs",
-              style: Theme.of(context).textTheme.bodySmall,
-              textAlign: TextAlign.center,
+        ),
+        const Gap(20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: FadeSlideIn(
+            child: ExperienceCard(
+              onContactPressed: () => scrollToSection(_contactKey),
             ),
           ),
-          const Gap(15),
-           Padding(
-             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-             child: Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
-                child: Row(
-                  children: [
-                    // Image section
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12.0),
-                          child: Image.asset(
-                            'assets/images/softifybd.png', // Replace with your image URL
-                            width: 160,
-                            height: 120,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    // Text section
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '2024-Present',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'Softifybd Ltd.',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'Intern',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'Cross Platform Mobile Application Developer',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Contact button
-                    Container(
-                      margin: EdgeInsets.only(left: 16),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: seedColor.withOpacity(0.1),
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        onPressed: () {
-                          scrollToSection(_contactKey);
-                        },
-                        child: Text(
-                          'CONTACT ME',
-                          style: TextStyle(
-                            color: seedColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-                       ),
-           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Row getInTouchSection(BuildContext context) {
+  Widget projectsSection(BuildContext context) {
+    return Column(
+      children: [
+        const SectionHeader(
+          title: "Projects",
+          description:
+              "A selection of professional and personal projects, showcasing real-world problem solving across ISP management, business productivity, education systems, and travel.",
+        ),
+        const Gap(20),
+        Wrap(
+          spacing: 12.0,
+          runSpacing: 12.0,
+          alignment: WrapAlignment.center,
+          children: projectsList.asMap().entries.map((e) {
+            return FadeSlideIn(
+              delay: Duration(milliseconds: e.key * 80),
+              child: SizedBox(
+                width: (MediaQuery.sizeOf(context).width - 80) / 2,
+                child: ProjectCard(project: e.value),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget educationSection(BuildContext context) {
+    return Column(
+      children: [
+        const SectionHeader(
+          title: "Education",
+          description: "Academic background with a strong foundation in computer science and engineering.",
+        ),
+        const Gap(20),
+        ...educationList.asMap().entries.map(
+          (e) => FadeSlideIn(
+            delay: Duration(milliseconds: e.key * 80),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: EducationCard(education: e.value),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget getInTouchSection(BuildContext context) {
+    final lottieSize = (MediaQuery.sizeOf(context).width * 0.18).clamp(100.0, 200.0);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Flexible(
           flex: 1,
           fit: FlexFit.loose,
-          child: Lottie.asset(coderAstronaut),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: FadeSlideIn(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // CTA banner
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: seedColor.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(10),
+                      border: const Border(
+                        left: BorderSide(color: seedColor, width: 3),
+                      ),
+                    ),
+                    child: Text(
+                      "Available for freelance projects and full-time opportunities",
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.white70,
+                            fontStyle: FontStyle.italic,
+                          ),
+                    ),
+                  ),
+                  const Gap(20),
+                  Lottie.asset(coderAstronaut, width: lottieSize, height: lottieSize),
+                  const Gap(16),
+                  Row(
+                    children: [
+                      Text("Get in touch", style: Theme.of(context).textTheme.titleMedium),
+                      const Gap(10),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.green.withValues(alpha: 0.5)),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.circle, color: Colors.green, size: 7),
+                            Gap(5),
+                            Text(
+                              "Open to freelance",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Gap(12),
+                  const ContactInfoRow(icon: phoneIcon, text: phone),
+                  const Gap(5),
+                  const ContactInfoRow(icon: emailIcon, text: email),
+                  const Gap(5),
+                  const ContactInfoRow(icon: addressIcon, text: address),
+                  const Gap(5),
+                  const ContactInfoRow(icon: linkedInIcon, text: "LinkedIn", url: linkedInLink),
+                  const Gap(5),
+                  const ContactInfoRow(icon: githubIcon, text: "GitHub", url: githubLink),
+                ],
+              ),
+            ),
+          ),
         ),
         Flexible(
           flex: 1,
           fit: FlexFit.loose,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Gap(30),
-                Text(
-                  "Get in touch",
-                  style: Theme.of(context).textTheme.titleMedium,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: FadeSlideIn(
+              delay: const Duration(milliseconds: 150),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: cardColor,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
                 ),
-                const Gap(5),
-                ContactInfoRow(icon: phoneIcon, text: phone),
-                const Gap(5),
-                ContactInfoRow(icon: emailIcon, text: email),
-                const Gap(5),
-                ContactInfoRow(icon: addressIcon, text: address),
-                const Gap(5),
-                ContactInfoRow(
-                  icon: linkedInIcon,
-                  text: linkedInLink,
-                  url: linkedInLink,
+                child: const Padding(
+                  padding: EdgeInsets.all(20),
+                  child: ContactForm(),
                 ),
-                const Gap(5),
-                ContactInfoRow(
-                  icon: githubIcon,
-                  text: githubLink,
-                  url: githubLink,
-                ),
-                const Gap(5),
-                ContactInfoRow(
-                  icon: skypeIcon,
-                  text: skypeLink,
-                  url: skypeLink,
-                ),
-              ]),
+              ),
+            ),
+          ),
         ),
       ],
     );

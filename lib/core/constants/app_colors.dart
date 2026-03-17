@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 
-Color seedColor = Colors.deepPurple;
-Color backgroundColor = Colors.black;
-Color appBarBackgroundColor = Colors.black;
-Color cardColor = const Color(0xFF212428);
-Color shadowColor = Colors.white60.withOpacity(0.2);
+// Brand accent — indigo-500 (distinctive, not a generic Material default)
+const Color seedColor = Color(0xFF6366F1);
+const Color seedColorCyan = Color(0xFF06B6D4); // secondary accent for gradients
+
+const Color backgroundColor = Color(0xFF080810);
+const Color appBarBackgroundColor = Colors.transparent;
+const Color cardColor = Color(0xFF13131F);
+final Color shadowColor = const Color(0xFF6366F1).withValues(alpha: 0.25);
 
 // Primary text
-Color primaryTextColor = Colors.white;  // For headers, main content
-Color secondaryTextColor = Colors.white70;  // For subtitles, secondary content
-Color tertiaryTextColor = Colors.grey;  // For captions, less important text
+const Color primaryTextColor = Colors.white;
+const Color secondaryTextColor = Colors.white70;
+const Color tertiaryTextColor = Color(0xFF8B8FA8);
 
 // Accent colors
-Color accentColorPurple = const Color(0xFF7B1FA2); // Deep Purple
-Color accentColorCyan = const Color(0xFF00BCD4);  // Cyan
-Color accentColorAmber = const Color(0xFFFFC107); // Amber
+const Color accentColorPurple = Color(0xFF6366F1);
+const Color accentColorCyan = Color(0xFF06B6D4);
+const Color accentColorAmber = Color(0xFFFFC107);
 
 // Error and warning
-Color errorColor = const Color(0xFFE53935);  // Red for errors or warnings
+const Color errorColor = Color(0xFFEF4444);
 
 // Button and link text colors
-Color buttonTextColor = Colors.white; // Typically white text on colored buttons
-Color linkTextColor = const Color(0xFF00BCD4); // Cyan for links
+const Color buttonTextColor = Colors.white;
+const Color linkTextColor = Color(0xFF06B6D4);

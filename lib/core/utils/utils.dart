@@ -1,11 +1,10 @@
 import 'package:url_launcher/url_launcher.dart';
 
-// Method to launch a URL, made public (without underscore)
 Future<void> launchUrlExternal(String link) async {
   final Uri url = Uri.parse(link);
   if (await canLaunchUrl(url)) {
-    await launchUrl(url);
+    await launchUrl(url, mode: LaunchMode.externalApplication);
   } else {
-    throw 'Could not launch $url';
+    throw Exception('Could not launch $url');
   }
 }

@@ -9,28 +9,47 @@ ThemeData darkTheme() {
     ),
     useMaterial3: true,
     scaffoldBackgroundColor: backgroundColor,
-    appBarTheme: AppBarTheme(
-      backgroundColor: appBarBackgroundColor,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      scrolledUnderElevation: 0,
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
-      elevation: 4,
+      elevation: 0,
       color: cardColor,
       shadowColor: shadowColor,
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: seedColor,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        textStyle: const TextStyle(
+          fontFamily: 'Sora',
+          fontWeight: FontWeight.w600,
+          fontSize: 13,
+          letterSpacing: 0.4,
+        ),
+      ),
+    ),
     fontFamily: 'Sora',
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       displayLarge: TextStyle(
         fontSize: 57,
         fontWeight: FontWeight.bold,
-        color: primaryTextColor, // Custom color
+        color: primaryTextColor,
+        letterSpacing: -1.5,
       ),
       displayMedium: TextStyle(
         fontSize: 45,
         fontWeight: FontWeight.w600,
         color: secondaryTextColor,
+        letterSpacing: -0.5,
       ),
       displaySmall: TextStyle(
         fontSize: 36,
@@ -41,16 +60,18 @@ ThemeData darkTheme() {
         fontSize: 32,
         fontWeight: FontWeight.w700,
         color: primaryTextColor,
+        letterSpacing: -0.5,
       ),
       headlineMedium: TextStyle(
         fontSize: 28,
         fontWeight: FontWeight.w600,
-        color: secondaryTextColor,
+        color: primaryTextColor,
+        letterSpacing: -0.5,
       ),
       headlineSmall: TextStyle(
         fontSize: 24,
-        fontWeight: FontWeight.w500,
-        color: tertiaryTextColor,
+        fontWeight: FontWeight.w600,
+        color: primaryTextColor,
       ),
       titleLarge: TextStyle(
         fontSize: 22,
@@ -63,7 +84,7 @@ ThemeData darkTheme() {
         color: secondaryTextColor,
       ),
       titleSmall: TextStyle(
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: FontWeight.w400,
         color: tertiaryTextColor,
       ),
@@ -71,31 +92,37 @@ ThemeData darkTheme() {
         fontSize: 16,
         fontWeight: FontWeight.normal,
         color: primaryTextColor,
+        height: 1.65,
       ),
       bodyMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.normal,
         color: secondaryTextColor,
+        height: 1.65,
       ),
       bodySmall: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.normal,
         color: tertiaryTextColor,
+        height: 1.65,
       ),
       labelLarge: TextStyle(
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: FontWeight.bold,
         color: primaryTextColor,
+        letterSpacing: 0.4,
       ),
       labelMedium: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         color: secondaryTextColor,
+        letterSpacing: 0.3,
       ),
       labelSmall: TextStyle(
         fontSize: 10,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: tertiaryTextColor,
+        letterSpacing: 0.5,
       ),
     ),
   );
