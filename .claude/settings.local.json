@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze:*)",
+      "Bash(flutter pub:*)",
+      "Bash(cmd /c \"cd /d D:\\\\Walk-of-Life\\\\Personal-Projects\\\\portfolio && flutter build web --release --base-href /Portfolio/ 2>&1\")",
+      "Bash(cmd /c \"cd /d D:\\\\Walk-of-Life\\\\Personal-Projects\\\\portfolio && flutter build web --release --base-href /Portfolio/ && echo BUILD_OK\")",
+      "Bash(cmd /c \"cd /d D:\\\\Walk-of-Life\\\\Personal-Projects\\\\portfolio && flutter build web --release --base-href /Portfolio/\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(powershell -Command \"Set-Location ''D:\\\\Walk-of-Life\\\\Personal-Projects\\\\portfolio''; flutter build web --release --base-href ''/Portfolio/''\")",
+      "Bash(powershell -NoProfile -Command \"Set-Location ''D:\\\\Walk-of-Life\\\\Personal-Projects\\\\portfolio''; git add -A -- '':!build/'' '':!.dart_tool/'' 2>&1; git status --short\")",
+      "Bash(powershell -NoProfile -Command \":*)",
+      "Bash(powershell -NoProfile -Command \"Set-Location ''D:\\\\Walk-of-Life\\\\Personal-Projects\\\\portfolio''; git push origin main 2>&1\")",
+      "Bash(powershell -NoProfile -Command \"gh run list --repo mahmudebnezaman/PortfolioWithFlutter --limit 5 2>&1\")",
+      "WebFetch(domain:api.github.com)",
+      "Bash(gh repo:*)"
+    ]
+  }
+}
