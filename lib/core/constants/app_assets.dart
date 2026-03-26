@@ -17,18 +17,23 @@ const String addressIcon = "assets/svgs/address.svg";
 const String cProgramIcon = "assets/svgs/c-programming-logo.svg";
 const String dartProgramIcon = "assets/svgs/dart-programming-logo.svg";
 const String flutterIcon = "assets/svgs/flutter-logo.svg";
+const String riverpodIcon = "assets/svgs/riverpod-logo.svg";
+const String blocIcon = "assets/svgs/bloc-logo.svg";
+const String getXIcon = "assets/svgs/getx-logo.svg";
 const String firebaseIcon = "assets/svgs/firebase-logo.svg";
 const String gitIcon = "assets/svgs/git-logo.svg";
 const String githubSkillIcon = "assets/svgs/github-logo.svg";
 const String gitlabSkillIcon = "assets/svgs/gitlab-logo.svg";
+const String postmanIcon = "assets/svgs/postman-logo.svg";
 
 const List<Skill> skillsList = [
   // Framework
   Skill(flutterIcon, "Flutter", "Building cross-platform mobile apps with Flutter, creating seamless and performant UIs.", category: "Framework"),
   Skill(dartProgramIcon, "Dart", "Strong in Dart — the core language of Flutter — for building robust, type-safe applications.", category: "Languages"),
   // State Management
-  Skill("", "Riverpod", "Advanced reactive state management for scalable, testable Flutter applications.", category: "State Management"),
-  Skill("", "Bloc / Cubit", "Event-driven state management using the BLoC pattern for complex business logic.", category: "State Management"),
+  Skill(riverpodIcon, "Riverpod", "Advanced reactive state management for scalable, testable Flutter applications.", category: "State Management"),
+  Skill(blocIcon, "Bloc / Cubit", "Event-driven state management using the BLoC pattern for complex business logic.", category: "State Management"),
+  Skill(getXIcon, "GetX", "Reactive state management with GetX for simple and powerful Flutter apps.", category: "State Management"),
   // Architecture
   Skill("", "Clean Architecture", "Designing layered, decoupled codebases with domain, data, and presentation separation.", category: "Architecture & Patterns"),
   Skill("", "MVVM", "Applying the Model-View-ViewModel pattern for maintainable, testable Flutter apps.", category: "Architecture & Patterns"),
@@ -40,6 +45,7 @@ const List<Skill> skillsList = [
   Skill(gitIcon, "Git", "Version control expertise with Git for managing code efficiently across teams.", category: "Tools"),
   Skill(githubSkillIcon, "GitHub", "Repository management, code review, and collaboration via GitHub.", category: "Tools"),
   Skill(gitlabSkillIcon, "GitLab", "CI/CD pipelines and project management using GitLab.", category: "Tools"),
+  Skill(postmanIcon, "Postman", "API testing and debugging using Postman, including request automation and environment management.", category: "Tools"),
   Skill(cProgramIcon, "C Programming", "Solid foundation in C, with knowledge in algorithms and memory management.", category: "Languages"),
 ];
 
