@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:portfolio/core/constants/app_assets.dart';
 import 'package:portfolio/core/constants/app_texts.dart';
+import 'package:portfolio/core/theme_notifier.dart';
 import 'package:portfolio/core/utils/utils.dart';
 import 'package:portfolio/core/widgets/build_nav_buttons.dart';
 
@@ -17,19 +18,28 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = isDark ? Colors.white : const Color(0xFF374151);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
             child: AppBar(
-              backgroundColor: Colors.black.withValues(alpha: 0.55),
+              backgroundColor: isDark
+                  ? Colors.black.withValues(alpha: 0.55)
+                  : Colors.white.withValues(alpha: 0.80),
               elevation: 0,
               automaticallyImplyLeading: false,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
+                    bottom: BorderSide(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.08)
+                          : Colors.black.withValues(alpha: 0.08),
+                    ),
                   ),
                 ),
               ),
@@ -51,25 +61,51 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                     ],
                   ),
-                  if (constraints.maxWidth > 750)
-                    Row(
-                      children: [
+                  Row(
+                    children: [
+                      if (constraints.maxWidth > 750) ...[
                         InkWell(
                           onTap: () => launchUrlExternal(linkedInLink),
-                          child: SvgPicture.asset(linkedInIcon, height: 20),
+                          child: SvgPicture.asset(
+                            linkedInIcon,
+                            height: 20,
+                            colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+                          ),
                         ),
                         const Gap(5),
                         InkWell(
                           onTap: () => launchUrlExternal(githubLink),
-                          child: SvgPicture.asset(githubIcon, height: 20),
+                          child: SvgPicture.asset(
+                            githubIcon,
+                            height: 20,
+                            colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+                          ),
                         ),
                         const Gap(5),
                         InkWell(
                           onTap: () => launchUrlExternal(teamsLink),
-                          child: SvgPicture.asset(teamsIcon, height: 20),
+                          child: SvgPicture.asset(
+                            teamsIcon,
+                            height: 20,
+                            colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+                          ),
                         ),
+                        const Gap(8),
                       ],
-                    ),
+                      ValueListenableBuilder<ThemeMode>(
+                        valueListenable: ThemeNotifier.of(context),
+                        builder: (ctx, mode, _) => IconButton(
+                          tooltip: isDark ? 'Switch to light mode' : 'Switch to dark mode',
+                          icon: Icon(
+                            isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+                            color: iconColor,
+                            size: 20,
+                          ),
+                          onPressed: () => ThemeNotifier.toggle(ctx),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

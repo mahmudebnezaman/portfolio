@@ -4,15 +4,25 @@ import 'package:flutter/material.dart';
 const Color seedColor = Color(0xFF6366F1);
 const Color seedColorCyan = Color(0xFF06B6D4); // secondary accent for gradients
 
+// Dark mode colors
 const Color backgroundColor = Color(0xFF080810);
 const Color appBarBackgroundColor = Colors.transparent;
 const Color cardColor = Color(0xFF13131F);
 final Color shadowColor = const Color(0xFF6366F1).withValues(alpha: 0.25);
 
-// Primary text
+// Dark mode text
 const Color primaryTextColor = Colors.white;
 const Color secondaryTextColor = Colors.white70;
 const Color tertiaryTextColor = Color(0xFF8B8FA8);
+
+// Light mode colors
+const Color backgroundColorLight = Color(0xFFF0F2FF);
+const Color cardColorLight = Color(0xFFFFFFFF);
+
+// Light mode text
+const Color primaryTextColorLight = Color(0xFF111827);
+const Color secondaryTextColorLight = Color(0xFF374151);
+const Color tertiaryTextColorLight = Color(0xFF6B7280);
 
 // Accent colors
 const Color accentColorPurple = Color(0xFF6366F1);

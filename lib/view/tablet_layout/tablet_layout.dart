@@ -72,23 +72,33 @@ class _TabletLayoutState extends State<TabletLayout> {
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(backgroundImage, fit: BoxFit.cover),
-          ),
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0x33080810),
-                    Color(0x99080810),
-                  ],
+          if (Theme.of(context).brightness == Brightness.dark) ...[
+            Positioned.fill(
+              child: Image.asset(backgroundImage, fit: BoxFit.cover),
+            ),
+            Positioned.fill(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0x33080810), Color(0x99080810)],
+                  ),
                 ),
               ),
             ),
-          ),
+          ] else
+            Positioned.fill(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFFEEF2FF), Color(0xFFF5F3FF), Color(0xFFFFFFFF)],
+                  ),
+                ),
+              ),
+            ),
           SingleChildScrollView(
             controller: _scrollController,
             child: Padding(
@@ -340,9 +350,13 @@ class _TabletLayoutState extends State<TabletLayout> {
               delay: const Duration(milliseconds: 150),
               child: Container(
                 decoration: BoxDecoration(
-                  color: cardColor,
+                  color: Theme.of(context).cardTheme.color,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
+                  border: Border.all(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white.withValues(alpha: 0.06)
+                        : Colors.black.withValues(alpha: 0.08),
+                  ),
                 ),
                 child: const Padding(
                   padding: EdgeInsets.all(20),
